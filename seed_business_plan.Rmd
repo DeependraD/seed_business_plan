@@ -1,0 +1,195 @@
+---
+title: "Business plan of Unique Seed Company, 2075-76"
+author: "  "
+date: "December 30, 2018"
+output: 
+  bookdown::pdf_document2:
+    toc: false
+    keep_tex: yes
+geometry: "left=2.00cm,right=2.00cm,top=2.0cm,bottom=2.0cm"
+header-includes:
+  - \usepackage{dcolumn}
+  - \usepackage{tabularx}
+  - \usepackage{longtable}
+  - \usepackage{array}
+  - \usepackage{multirow}
+  - \usepackage[table]{xcolor}
+  - \usepackage{wrapfig}
+  - \usepackage{float}
+  - \usepackage{colortbl}
+  - \usepackage{pdflscape}
+  - \usepackage{tabu}
+  - \usepackage{threeparttable}
+  - \usepackage[normalem]{ulem}
+  - \usepackage{xcolor}
+  - \usepackage{rotating}
+  - \newcommand{\blandscape}{\begin{landscape}}
+  - \newcommand{\elandscape}{\end{landscape}}
+  - \usepackage{subfig}
+  - \usepackage[format=hang,labelfont=bf,margin=0.5cm,justification=centering]{caption}
+  - \setlength{\tabcolsep}{1pt}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(tidy = TRUE, cache = FALSE, 
+                      echo = FALSE, 
+                      tidy.opts = list(width.cutoff=50), 
+                      eval = TRUE, warning = FALSE, message = FALSE,
+                      # fig.show = "hold", 
+                      fig.align = "center", fig.width = 5,
+                      fig.asp = 0.8, out.width = "0.8\\linewidth")
+options(knitr.kable.NA = "", digits = 3, knitr.table.format = "latex")
+require(tidyverse)
+require(kableExtra)
+```
+
+
+# Background
+
+Unique Seed Company (USC), is a private seed company of Nepal established in 2007 under the Company Act (2061). USC's vision is to be the best seed company of Nepal for cereal, pulse, oilseed, vegetables and fodder seeds. To achieve this vision, it works in variety development, seed production, processing and marketing in partnership with different actors associated with seed value chain.  Its registered office is located in Dhangadhi Sub-Metropolitan City ward no 13 (Kailali Gaun). Currently USC produces improved seeds of rice, wheat, maize and legumes in contractual arrangement with farmers, and sells its products through dealer networks. This business plan reviews the current progress of the seed company, opportunities and strategies for it's growth.
+
+# Plan summary
+
+
+# Table of contents
+
+Typical questions addressed by a business plan for a start up venture
+
+What problem does the company's product or service solve? What niche will it fill?
+-> Company addresses the persistant problem of seed status in Nepal.
+
+What is the company's solution to the problem?
+
+
+Who are the company's customers, and how will the company market and sell its products to them?
+What is the size of the market for this solution?
+What is the business model for the business (how will it make money)?
+Who are the competitors and how will the company maintain a competitive advantage?
+How does the company plan to manage its operations as it grows?
+Who will run the company and what makes them qualified to do so?
+What are the risks and threats confronting the business, and what can be done to mitigate them?
+What are the company's capital and resource requirements?
+What are the company's historical and projected financial statements?
+
+# Problem/mission statement
+
+
+## For startups
+- Business environment analysis
+- SWOT analysis
+- Industry background
+- Competitor analysis
+- Market analysis
+
+# Business description
+
+
+# Business accomplishments
+
+## Progress Review and Opportunity Analysis
+
+As of Jan 2018, the company has increased seed sold volume by 10 folds as compared to its establishment year. Currently, it works with more than 500 seed growers located in Kailali, Kanchanpur, Doti and Dadeldhura districts; and sells seed through 150 dealers spreading across 44 districts of Nepal. The company has constructed two seed storage buildings each with 1000t capacity, set up two grading machines with 3.5t/hour capacity, threshing floor with 4800 sq. ft. capacity in its own land (0.5ha). To ensure the quality of seed, it has recently established a seed laboratory inside the premise. The USC has also rented 2ha land for R&D activities nearby. It has established strong linkage with national and international level public and private research and development organizations. These networks have been useful to increase access to germplasm, source seed, capacity building of the company staff, and marketing of its products. It is owned and led by two shareholders having agriculture and management background with back up from the dedicated and dynamic staff. There are 15 staffs, as of now. During course of business, the company owners have realized the increasing demand of company's products in the domestic markets as well as in Indian markets bordering with terai region of Nepal. Consumers have developed a sense of awareness about the importance of using improved seeds of new varieties. Despite this, the formal sector supplies only 15% of the total seed requirement, and the remaining 85% of the demand is met through informal channels such as local exchange. Imports volume of over 3000t of hybrid maize and 4000t of hybrid rice seed from foreign countries in Nepal, highlights that there is immense potential for the import substitution of these products, while benifitting from the inherent agro-climatic diversity, cheap human labor and improved policy environment for the growth of seed industry in Nepal. 
+
+```{r historical-sales, fig.cap="Seed sales scenario of Unique Seed Company over the years"}
+historical_sales <- read_csv("./data/unique_seed_sales_historical_summary.csv") %>% 
+  mutate_at(c("Fiscal Year", "Fiscal Year_AD"), function(x)str_extract(x, "\\d{4}")) %>% 
+  mutate_at(c("Fiscal Year", "Fiscal Year_AD"), as.numeric) %>% 
+  mutate_at(c("Fiscal Year_AD_point"), 
+            function(x)lubridate::as_date(strptime(x, format = "%d-%b-%y"))) %>% 
+  select(-"Fiscal Year") %>%
+  select(-"Total") %>%
+  gather(key = "Crop", value = "Production target (Mt)", -"Fiscal Year_AD_point", -"Fiscal Year_AD")
+
+# static plot
+p_static <- historical_sales %>% 
+  ggplot(aes(`Fiscal Year_AD_point`, `Production target (Mt)`, group = Crop)) +
+  geom_line(aes(color = Crop), size = 3) +
+  theme_bw() + 
+  theme(legend.text = element_text(size = 12),
+        legend.title = element_text(size = 14),
+        axis.text = element_text(size = 12), 
+        axis.title = element_text(size = 14)) +
+  geom_point() +
+  ylab("Production trend of different years (Mt)") +
+  xlab("Fiscal year period (AD)")
+p_static
+```
+
+
+# Marketing plan
+
+
+# Operation plan
+## Sales revenue forecast
+
+
+# Profit and loss forecast
+
+```{r profit-loss-account}
+# quarterly transaction overview
+qtrans <- readxl::read_xlsx("./data/unique_seed_business_profit_loss.xlsx", "quarterly_transaction")
+
+# purchase sales quantity
+ps_thorough <- readxl::read_xlsx("./data/unique_seed_business_profit_loss.xlsx", "profit_loss_thorough", skip = 3)
+
+# profit and loss account summary
+pl_summary <- readxl::read_xlsx("./data/unique_seed_business_profit_loss.xlsx", "profit_loss_summary")
+
+# closing stock value
+cs_value <- readxl::read_xlsx("./data/unique_seed_business_profit_loss.xlsx", "closing_stock_value")
+
+# value of purchase and sales
+ps_value <- ps_thorough %>% 
+  gather(key = "Year_quarter", value = "Quantity_tons", -Crop, -`Seed class`, 
+         -`Selling price_per_ton`, -`Purchasing price_per_ton`, -`Cash status`, 
+         -`Total Sales_ton`, -`Stock balance_ton`) %>% 
+  separate(col = "Year_quarter", into = c("Year", "Quarters"), sep = "_") %>% 
+  spread(key = Quarters, value = Quantity_tons)
+
+ps_value %>% 
+  mutate(Purchase_value = case_when(
+    Crop == "Lentil" ~ sum(`Q3(Jan/Mar)`,`Q4(April/June)`, na.rm = TRUE)*`Purchasing price_per_ton`,
+    Crop == "Maize" ~ `Q3(Jan/Mar)`*`Purchasing price_per_ton`,
+    Crop == "Rice" ~ `Q2(Oct/Dec)`*`Purchasing price_per_ton`,
+    Crop == "Wheat" ~ `Q4(April/June)`*`Purchasing price_per_ton`,
+    TRUE ~ NA_real_
+  ), Sales_value = case_when(
+    Crop == "Lentil" ~ sum(`Q2(Oct/Dec)`,`Q1(July/Sept)`, na.rm = TRUE)*`Selling price_per_ton`,
+    Crop == "Maize" ~ `Q1(July/Sept)`*`Selling price_per_ton`,
+    Crop == "Rice" ~ `Q4(April/June)`*`Selling price_per_ton`,
+    Crop == "Wheat" ~ `Q2(Oct/Dec)`*`Selling price_per_ton`,
+    TRUE ~ NA_real_
+  )
+  ) %>% View()
+
+```
+
+
+# Capital spending plan
+
+
+# Cash flow forecast
+
+
+# Future trends
+
+
+# Risks facing business
+
+
+# Personnel/management plan
+
+
+# Specific business goals
+
+
+# Personal financial statement
+
+
+# Personal background
+
+
+# Appendix
+
+
+# Supporting documents
